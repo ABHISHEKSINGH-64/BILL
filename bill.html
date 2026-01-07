@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Electricity Bill</title>
+
+<style>
+body {
+    background: #e8eef7;
+    font-family: Verdana, sans-serif;
+}
+
+.bill-box {
+    width: 420px;
+    margin: 30px auto;
+    background: #ffffff;
+    border: 2px solid #003366;
+}
+
+.header {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.section {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+.section label {
+    display: block;
+    margin-top: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 6px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table th, .table td {
+    border: 1px solid #000;
+    padding: 6px;
+    text-align: center;
+}
+
+.total {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #003366;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+@media print {
+    button {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bill-box">
+    <div class="header">
+        <h2>Electricity Department</h2>
+        <p>Monthly Power Bill</p>
+    </div>
+
+    <div class="section">
+        <label>Consumer Name</label>
+        <input id="name">
+
+        <label>Consumer ID</label>
+        <input id="id">
+
+        <label>Previous Reading</label>
+        <input type="number" id="prev">
+
+        <label>Current Reading</label>
+        <input type="number" id="curr">
+    </div>
+
+    <div class="section">
+        <button onclick="generateBill()">Generate Bill</button>
+    </div>
+
+    <div class="section" id="bill"></div>
+
+    <div class="section">
+        <button onclick="window.print()">Print Bill</button>
+    </div>
+</div>
+
+<script>
+function generateBill() {
+    let prev = Number(prevReading.value);
+    let curr = Number(currReading.value);
+
+    let units = curr - prev;
+    if (units < 0) {
+        alert("Invalid meter reading");
+        return;
+    }
+
+    let amount = 0;
+
+    if (units <= 100) {
+        amount = units * 3;
+    } 
+    else if (units <= 200) {
+        amount = (100 * 3) + ((units - 100) * 5);
+    } 
+    else {
+        amount = (100 * 3) + (100 * 5) + ((units - 200) * 8);
+    }
+
+    let fixedCharge = 50;
+    let total = amount + fixedCharge;
+
+    bill.innerHTML = `
+        <table class="table">
+            <tr>
+                <th>Details</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Units Consumed</td>
+                <td>${units}</td>
+            </tr>
+            <tr>
+                <td>Energy Charges</td>
+                <td>₹${amount}</td>
+            </tr>
+            <tr>
+                <td>Fixed Charges</td>
+                <td>₹${fixedCharge}</td>
+            </tr>
+            <tr>
+                <td class="total">Total Amount</td>
+                <td class="total">₹${total}</td>
+            </tr>
+        </table>
+    `;
+}
+
+const prevReading = document.getElementById("prev");
+const currReading = document.getElementById("curr");
+const bill = document.getElementById("bill");
+</script>
+
+</body>
+</html>
+
+
