@@ -1,75 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Electricity Bill</title>
 
 <style>
-body {
-    background: #e8eef7;
-    font-family: Verdana, sans-serif;
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
 }
 
-.bill-box {
-    width: 420px;
-    margin: 30px auto;
-    background: #ffffff;
-    border: 2px solid #003366;
+.bill-box{
+    width:420px;
+    margin:30px auto;
+    background:#fff;
+    padding:20px;
+    border:2px solid #000;
 }
 
-.header {
-    background: #003366;
-    color: white;
-    text-align: center;
-    padding: 10px;
+.row{
+    display:flex;
+    justify-content:space-between;
+    margin:8px 0;
 }
 
-.section {
-    padding: 10px 15px;
-    border-bottom: 1px solid #ccc;
+label{
+    width:45%;
 }
 
-.section label {
-    display: block;
-    margin-top: 5px;
+input{
+    width:50%;
+    padding:4px;
 }
 
-input {
-    width: 100%;
-    padding: 6px;
+.result{
+    margin-top:10px;
+    border-top:1px solid #000;
+    padding-top:10px;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+button{
+    width:100%;
+    padding:8px;
+    margin-top:12px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.table th, .table td {
-    border: 1px solid #000;
-    padding: 6px;
-    text-align: center;
+.right-note{
+    margin-top:15px;
+    font-size:13px;
+    border-top:1px dashed #000;
+    padding-top:8px;
 }
 
-.total {
-    font-size: 16px;
-    font-weight: bold;
-    text-align: right;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background: #003366;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-@media print {
-    button {
-        display: none;
-    }
+@media print{
+    button{display:none;}
 }
 </style>
 </head>
@@ -77,91 +63,88 @@ button {
 <body>
 
 <div class="bill-box">
-    <div class="header">
-        <h2>Electricity Department</h2>
-        <p>Monthly Power Bill</p>
+    <h3 align="center">ELECTRIC BILL</h3>
+
+    <div class="row">
+        <label>Meter No</label>
+        <input id="meter">
     </div>
 
-    <div class="section">
+    <div class="row">
         <label>Consumer Name</label>
         <input id="name">
+    </div>
 
-        <label>Consumer ID</label>
-        <input id="id">
-
+    <div class="row">
         <label>Previous Reading</label>
         <input type="number" id="prev">
+    </div>
 
+    <div class="row">
         <label>Current Reading</label>
         <input type="number" id="curr">
     </div>
 
-    <div class="section">
-        <button onclick="generateBill()">Generate Bill</button>
+    <div class="row">
+        <label>Units</label>
+        <input id="units" readonly>
     </div>
 
-    <div class="section" id="bill"></div>
+    <div class="result">
+        <div class="row">
+            <label>Amount</label>
+            <input id="amount" readonly>
+        </div>
 
-    <div class="section">
-        <button onclick="window.print()">Print Bill</button>
+        <div class="row">
+            <label>Surcharge</label>
+            <input id="surcharge" readonly>
+        </div>
+
+        <div class="row">
+            <label><b>Total</b></label>
+            <input id="total" readonly>
+        </div>
+    </div>
+
+    <button onclick="calculate()">CALCULATE</button>
+
+    <div class="right-note">
+        <b>Slab Details</b><br>
+        0 – 200 → ₹1.00<br>
+        201 – 300 → ₹1.25<br>
+        301 – 400 → ₹1.75<br>
+        401 – 500 → ₹2.00
     </div>
 </div>
 
 <script>
-function generateBill() {
-    let prev = Number(prevReading.value);
-    let curr = Number(currReading.value);
+function calculate(){
+    let prev = Number(document.getElementById("prev").value);
+    let curr = Number(document.getElementById("curr").value);
 
-    let units = curr - prev;
-    if (units < 0) {
-        alert("Invalid meter reading");
+    if(curr < prev){
+        alert("Invalid Reading");
         return;
     }
 
-    let amount = 0;
+    let units = curr - prev;
+    let rate = 0;
 
-    if (units <= 100) {
-        amount = units * 3;
-    } 
-    else if (units <= 200) {
-        amount = (100 * 3) + ((units - 100) * 5);
-    } 
-    else {
-        amount = (100 * 3) + (100 * 5) + ((units - 200) * 8);
-    }
+    if(units <= 200) rate = 1.00;
+    else if(units <= 300) rate = 1.25;
+    else if(units <= 400) rate = 1.75;
+    else rate = 2.00;
 
-    let fixedCharge = 50;
-    let total = amount + fixedCharge;
+    let amount = units * rate;
+    let surcharge = amount * 0.10;
+    let total = amount + surcharge;
 
-    bill.innerHTML = `
-        <table class="table">
-            <tr>
-                <th>Details</th>
-                <th>Value</th>
-            </tr>
-            <tr>
-                <td>Units Consumed</td>
-                <td>${units}</td>
-            </tr>
-            <tr>
-                <td>Energy Charges</td>
-                <td>₹${amount}</td>
-            </tr>
-            <tr>
-                <td>Fixed Charges</td>
-                <td>₹${fixedCharge}</td>
-            </tr>
-            <tr>
-                <td class="total">Total Amount</td>
-                <td class="total">₹${total}</td>
-            </tr>
-        </table>
-    `;
+    document.getElementById("units").value = units;
+    document.getElementById("amount").value = amount.toFixed(2);
+    document.getElementById("surcharge").value = surcharge.toFixed(2);
+    document.getElementById("total").value = total.toFixed(2);
 }
-
-const prevReading = document.getElementById("prev");
-const currReading = document.getElementById("curr");
-const bill = document.getElementById("bill");
 </script>
 
 </body>
