@@ -118,34 +118,7 @@ button{
     </div>
 </div>
 
-<script>
-function calculate(){
-    let prev = Number(document.getElementById("prev").value);
-    let curr = Number(document.getElementById("curr").value);
 
-    if(curr < prev){
-        alert("Invalid Reading");
-        return;
-    }
-
-    let units = curr - prev;
-    let rate = 0;
-
-    if(units <= 200) rate = 1.00;
-    else if(units <= 300) rate = 1.25;
-    else if(units <= 400) rate = 1.75;
-    else rate = 2.00;
-
-    let amount = units * rate;
-    let surcharge = amount * 0.10;
-    let total = amount + surcharge;
-
-    document.getElementById("units").value = units;
-    document.getElementById("amount").value = amount.toFixed(2);
-    document.getElementById("surcharge").value = surcharge.toFixed(2);
-    document.getElementById("total").value = total.toFixed(2);
-}
-</script>
 
 </body>
 </html>
