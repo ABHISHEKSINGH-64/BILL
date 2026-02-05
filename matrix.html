@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Add & Subtract</title>
+
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 8px;
+        }
+
+        input {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            font-size: 18px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 20px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result input {
+            background: lightgreen;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>3 × 3 Matrix Addition & Subtraction</h2>
+
+<div class="container">
+ 
+    <div>
+        <h3>Matrix A</h3>
+        <div class="matrix">
+            <input id="a1"><input id="a2"><input id="a3">
+            <input id="a4"><input id="a5"><input id="a6">
+            <input id="a7"><input id="a8"><input id="a9">
+        </div>
+    </div>
+
+    <div>
+        <h3>Matrix B</h3>
+        <div class="matrix">
+            <input id="b1"><input id="b2"><input id="b3">
+            <input id="b4"><input id="b5"><input id="b6">
+            <input id="b7"><input id="b8"><input id="b9">
+        </div>
+    </div>
+
+    <div>
+        <h3>Result</h3>
+        <div class="matrix result">
+            <input id="r1" disabled><input id="r2" disabled><input id="r3" disabled>
+            <input id="r4" disabled><input id="r5" disabled><input id="r6" disabled>
+            <input id="r7" disabled><input id="r8" disabled><input id="r9" disabled>
+        </div>
+    </div>
+
+</div>
+
+<button onclick="add()">Add</button>
+<button onclick="subtract()">Subtract</button>
+
+<script>
+    function add() {
+        for (let i = 1; i <= 9; i++) {
+            let a = Number(document.getElementById("a" + i).value);
+            let b = Number(document.getElementById("b" + i).value);
+            document.getElementById("r" + i).value = a + b;
+        }
+    }
+
+    function subtract() {
+        for (let i = 1; i <= 9; i++) {
+            let a = Number(document.getElementById("a" + i).value);
+            let b = Number(document.getElementById("b" + i).value);
+            document.getElementById("r" + i).value = a - b;
+        }
+    }
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<title>jQuery Intro</title>
+		<style type="text/css">
+			body{border:1px solid black}
+			p, div { border: 1px solid #bd0000; margin:50px; padding:20px}
+		</style>
+		<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+	 <script type="text/javascript">
+        $(document).ready(function(){
+
+        $("button").click(function() {
+
+        let str = "";   // declare variable
+
+        let btnId = $(this).attr("id");
+        console.log("clicked", btnId);
+
+        if (btnId === "Microsoft") {
+
+            str = "Founded by Bill Gates and Paul Allen to market BASIC interpreters for the Altair 8800, Microsoft rose to dominate the personal computer operating system market with MS-DOS in the mid-1980s, followed by Windows.";
+
+        } else if (btnId === "infosys") {
+
+            str = "Infosys Limited is an Indian multinational technology company founded in 1981 and headquartered in Bengaluru.";
+
+        } else if (btnId === "google") {
+
+            str = "Google was founded in 1998 by Larry Page and Sergey Brin and later became part of Alphabet Inc.";
+
+        } else if (btnId === "reset") {
+
+            str = "Click any company button to see details here.";
+        }
+
+        console.log("str", str);
+
+        $("p").text(str);  
+    });
+
+});
+</script>
+		
+	</head>
+	<body>
+		<p> <br /><br />
+        Founded by Bill Gates and Paul Allen to market BASIC interpreters for the Altair 8800, Microsoft rose to dominate the personal computer operating system market with MS-DOS in the mid-1980s, followed by Windows. During the 41 years from 1980 to 2021 Microsoft released 9 versions of MS-DOS with a median frequency of 2 years, and 13 versions of Windows with a median frequency of 3 years. The company's 1986 initial public offering (IPO) and subsequent rise in its share price created three billionaires and an estimated 12,000 millionaires among Microsoft employees. Since the 1990s, it has increasingly diversified from the operating system market. Steve Ballmer replaced Gates as CEO in 2000. He oversaw the then-largest of Microsoft's corporate acquisitions in Skype Technologies in 2011,[2] an increased focus on hardware[3][4] that led to its first in-house PC line, the Surface, in 2012, and the formation of Microsoft Mobile through Nokia. Since Satya Nadella took over as CEO in 2014, the company has changed focus towards cloud computing,[5][6] as well as its acquisition of LinkedIn for $26.2 billion in 2016.[7] Under Nadella's direction, the company has expanded its video gaming business to support the Xbox brand, establishing the Microsoft Gaming division in 2022 and the acquisition of Activision Blizzard for $68.7 billion in 2023.
+		</p>
+		<div>
+			<span><button id="Microsoft">Microsoft</button></span>
+			<span><button id="infosys">infosys</button></span>
+			<span><button id="google">google</button></span>
+
+			<span><button id="reset">Reset</button></span>
+		</div>
+	</body>
+</html>
+
+
